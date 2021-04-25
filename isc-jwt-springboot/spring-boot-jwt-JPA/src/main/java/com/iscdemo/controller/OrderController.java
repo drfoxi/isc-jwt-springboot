@@ -28,4 +28,12 @@ public class OrderController {
         return ResponseEntity.ok(orderManagerService.registerOrder(msc, shoppingCart));
     }
 
+    @RequestMapping(value = "/fetchOrderByTrackingCode", method = RequestMethod.GET)
+    public ResponseEntity<InvocationContext> fetchOrderByTrackingCode(@RequestParam(name = "trackingCode") Long trackingCode,
+                                                                     @RequestHeader(name = "Authorization") String token)
+            throws Exception {
+        MainSecurityContext msc = jwtTokenUtil.getMainSecurityContextFromToken(token);
+        return ResponseEntity.ok(orderManagerService.fetchShoppingCartByTrackingCode(msc, trackingCode));
+    }
+
 }

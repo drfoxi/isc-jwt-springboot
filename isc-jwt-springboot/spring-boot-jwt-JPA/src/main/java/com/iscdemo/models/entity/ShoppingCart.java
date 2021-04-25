@@ -19,6 +19,9 @@ public class ShoppingCart implements Serializable {
     @Column(name = "total_amount")
     private Long totalAmount;
 
+    @Column(name = "tracking_code" , unique = true)
+    private Long trackingCode;
+
     @Column(name = "total_quantity")
     private int totalQuantity;
 
@@ -69,5 +72,13 @@ public class ShoppingCart implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Long getTrackingCode() {
+        return trackingCode;
+    }
+
+    public void setTrackingCode(Long trackingCode) {
+        this.trackingCode = trackingCode;
     }
 }

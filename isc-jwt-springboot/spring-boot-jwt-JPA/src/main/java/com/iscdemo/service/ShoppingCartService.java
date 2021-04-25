@@ -44,16 +44,15 @@ public class ShoppingCartService {
                 return new InvocationContext<>(validationIc.getErrorCode(),
                         validationIc.getErrorMessage());
             }
-
-
             InvocationContext<Integer> calculateTotalQuantityIc = calculateTotalQuantity(msc, shoppingCart);
             if (!calculateTotalQuantityIc.isSuccessful()) {
                 return new InvocationContext<>(calculateTotalQuantityIc.getErrorCode(),
                         calculateTotalQuantityIc.getErrorMessage());
             }
             shoppingCart.setTotalQuantity(calculateTotalQuantityIc.getData());
+            shoppingCart.setTrackingCode(Long.valueOf(new Date(System.currentTimeMillis()).getTime()));
             shoppingCartDao.save(shoppingCart);
-            ic.setData(Long.valueOf(new Date(System.currentTimeMillis()).toString())); //todo
+            ic.setData(shoppingCart.getTrackingCode());
             return ic;
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,6 +60,16 @@ public class ShoppingCartService {
         }
     }
 
+    public InvocationContext<ShoppingCart> fetchShoppingCartByTrackingCode(MainSecurityContext msc, Long trackingCode) throws Exception {
+        try {
+            InvocationContext<ShoppingCart> ic = new InvocationContext<>();
+            ic.setData(shoppingCartDao.findByTrackingCode(trackingCode));
+            return ic;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(e);
+        }
+    }
 
     private InvocationContext<Long> calculateTotalAmountOfShoppingCart(MainSecurityContext msc, ShoppingCart shoppingCart) throws Exception {
         try {

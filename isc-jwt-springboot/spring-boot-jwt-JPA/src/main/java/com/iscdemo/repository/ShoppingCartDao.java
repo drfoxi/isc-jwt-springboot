@@ -9,4 +9,6 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public interface ShoppingCartDao extends CrudRepository<ShoppingCart , Integer> {
+
+    ShoppingCart findByTrackingCode(Long trackingCode);
 }
