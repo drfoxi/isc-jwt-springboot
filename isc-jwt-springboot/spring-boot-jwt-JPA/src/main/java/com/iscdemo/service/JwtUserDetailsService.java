@@ -51,23 +51,21 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     public InvocationContext<User> save(MainSecurityContext msc) throws Exception {
         try {
-            InvocationContext<User> ic = new InvocationContext<>();
-            if (userDao.findByUsername(msc.getUsername()) == null) {
-                User newUser = new User();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-                newUser.setFirstName(msc.getFirstName());
-                newUser.setLastName(msc.getLastName());
-                newUser.setRegisterDate(Long.valueOf(simpleDateFormat.format(new Date())));
-                newUser.setRegisterChannel(msc.getChannel());
-                newUser.setUserRole(msc.getUserRole());
-                newUser.setUsername(msc.getUsername());
-                newUser.setPassword(bcryptEncoder.encode(msc.getPassword()));
-                ic.setData(userDao.save(newUser));
-
-            } else {
-                ic.setErrorCode(ErrorConstant.USER_ALREDY_EXIST);
-                ic.setErrorMessage(ErrorConstant.USER_ALREDY_EXIST_MESSAGE);
+            InvocationContext validationIc = doValidationForRegisterMethod(msc);
+            if(!validationIc.isSuccessful()){
+                return new InvocationContext<>(validationIc.getErrorCode() , validationIc.getErrorMessage());
             }
+            InvocationContext<User> ic = new InvocationContext<>();
+            User newUser = new User();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+            newUser.setFirstName(msc.getFirstName());
+            newUser.setLastName(msc.getLastName());
+            newUser.setRegisterDate(Long.valueOf(simpleDateFormat.format(new Date())));
+            newUser.setRegisterChannel(msc.getChannel());
+            newUser.setUserRole(msc.getUserRole());
+            newUser.setUsername(msc.getUsername());
+            newUser.setPassword(bcryptEncoder.encode(msc.getPassword()));
+            ic.setData(userDao.save(newUser));
             return ic;
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,11 +91,31 @@ public class JwtUserDetailsService implements UserDetailsService {
             msc.setChannel(jwtRequest.getChannel());
             msc.setMac(jwtRequest.getMac());
             msc.setIp(jwtRequest.getIp());
-
             final String token = jwtTokenUtil.generateToken(msc);
             ic.setData(token);
             return ic;
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(e);
+        }
+    }
+
+    private InvocationContext<Boolean> doValidationForRegisterMethod(MainSecurityContext msc) throws Exception {
+        try {
+            InvocationContext<Boolean> ic = new InvocationContext<Boolean>();
+            ic.setData(true);
+
+            if (userDao.findByUsername(msc.getUsername()) != null) {
+                return new InvocationContext<>(ErrorConstant.USER_ALREDY_EXIST, ErrorConstant.USER_ALREDY_EXIST_MESSAGE);
+            }
+            if (msc.getPassword().length() <= 5) {
+                return new InvocationContext<>(ErrorConstant.PASSWORD_IS_TOO_SHORT, ErrorConstant.PASSWORD_IS_TOO_SHORT_MESSAGE);
+            }
+            if (!(msc.getChannel() == 50 || msc.getChannel() == 60)) {
+                return new InvocationContext<>(ErrorConstant.CHANNEL_INCORRECT, ErrorConstant.CHANNEL_INCORRECT_MESSAGE);
+            }
+            return ic;
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception(e);
