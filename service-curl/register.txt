@@ -1,0 +1,12 @@
+curl --location --request POST 'http://localhost:8080/security/register' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"firstName": "alireza",
+"lastName" : "abdollahzadeh",
+"userRole" : 1,
+"channel" : 50,
+"registerDate" : 0,
+"password" : "admin1",
+"username" : "admin"
+
+}'

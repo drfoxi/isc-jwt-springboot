@@ -1,0 +1,10 @@
+curl --location --request POST 'http://localhost:8080/product/insertProduct' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInBheWxvYWQiOnsiaWQiOjEsImZpcnN0TmFtZSI6ImFsaXJlemEiLCJsYXN0TmFtZSI6ImFiZG9sbGFoemFkZWgiLCJ1c2VyUm9sZSI6MSwiY2hhbm5lbCI6MTIsImxvZ2luRGF0ZSI6MjAyMTA0MjcxNDUxMjIsInJlZ2lzdGVyRGF0ZSI6MjAyMTA0MjcxNDUxMTYsIm1hYyI6bnVsbCwiaXAiOm51bGwsInRva2VuIjpudWxsLCJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOm51bGx9LCJleHAiOjE2MTk1MzY4ODIsImlhdCI6MTYxOTUxODg4Mn0.o-_7Kc-15G3-7i6ui4RvA4BAJH1UhJ9EpGGNq8-S8U8' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"productName": "Pizza",
+"productPrice": "55000",
+"available": true,
+"preparationTime": "30"
+
+}'

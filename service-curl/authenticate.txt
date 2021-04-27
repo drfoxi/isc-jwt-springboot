@@ -1,0 +1,7 @@
+curl --location --request POST 'http://localhost:8080/security/authenticate' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"username" : "admin",
+"password" : "admin1",
+"channel" : "12"
+}'
