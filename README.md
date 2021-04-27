@@ -1,9 +1,9 @@
 # isc-jwt-springboot
 ISC Jwt SpringBoot
+Simple project based on SpeingSecurity , JWT and springBoot.
 
 
-
-Please read application.json and reconfig it befor deploying
+Please read application.json and reconfig it befor deploying embedded tomcat
 
 ==> DATABASE CONFIG IS REQUIRED
 
