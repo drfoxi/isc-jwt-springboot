@@ -8,4 +8,6 @@ public class ProjectConstant {
 
     public static final long MAX_MOBILE_AMOUNT_PAYMENT = 10000;
 
+    public static final int ADMIN_USER_CODE = 1;
+    public static final int REGULAR_USER_CODE = 2;
 }

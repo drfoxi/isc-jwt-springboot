@@ -1,12 +1,16 @@
 package com.iscdemo.models.basemodel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.iscdemo.models.constant.ErrorConstant;
 
 import java.io.Serializable;
 
 public class InvocationContext<T> implements Serializable {
-    private int errorCode;
-    private String errorMessage;
+    // as default code. it's will be changed if something unusual happened.
+    private int errorCode = ErrorConstant.OPERATION_SUCCESS;
+
+    //as default message. it's will be changed if something unusual happened.
+    private String errorMessage = ErrorConstant.OPERATION_SUCCESS_MESSAGE;
     private T data;
 
     public InvocationContext() {

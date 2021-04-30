@@ -7,6 +7,7 @@ import java.util.Date;
 import com.iscdemo.models.basemodel.InvocationContext;
 import com.iscdemo.models.basemodel.MainSecurityContext;
 import com.iscdemo.models.constant.ErrorConstant;
+import com.iscdemo.models.constant.ProjectConstant;
 import com.iscdemo.models.model.JwtRequest;
 import com.iscdemo.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             newUser.setLastName(msc.getLastName());
             newUser.setRegisterDate(Long.valueOf(simpleDateFormat.format(new Date())));
             newUser.setRegisterChannel(msc.getChannel());
-            newUser.setUserRole(msc.getUserRole());
+            newUser.setUserRole(ProjectConstant.REGULAR_USER_CODE);
             newUser.setUsername(msc.getUsername());
             newUser.setPassword(bcryptEncoder.encode(msc.getPassword()));
             ic.setData(userDao.save(newUser));
@@ -124,7 +125,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     private void authenticate(String username, String password) throws Exception {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password,new ArrayList<>()));
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {

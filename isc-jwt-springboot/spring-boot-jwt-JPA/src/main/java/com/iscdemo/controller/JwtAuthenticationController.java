@@ -29,8 +29,8 @@ public class JwtAuthenticationController {
 	private JwtUserDetailsService userDetailsService;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<InvocationContext> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-		return ResponseEntity.ok(userDetailsService.generateAccessToken(authenticationRequest));
+	public ResponseEntity<InvocationContext> authenticate(@RequestBody JwtRequest jwtRequest) throws Exception {
+		return ResponseEntity.ok(userDetailsService.generateAccessToken(jwtRequest));
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)

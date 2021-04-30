@@ -2,6 +2,15 @@ package com.iscdemo.models.constant;
 
 public class ErrorConstant {
 
+    public static final int OPERATION_SUCCESS = 0;
+    public static final String OPERATION_SUCCESS_MESSAGE = "عملیات با موفقیت انجام شد.";
+
+    public static final int ACCESS_DENIED = 30000;
+    public static final String ACCESS_DENIED_MESSAGE = "شما اجازه دسترسی به سرویس فراخوانی شده را ندارید.";
+
+    public static final int USER_NOT_FOUND = 30099;
+    public static final String USER_NOT_FOUND_MESSAGE = "کاربر با این شناسه در سیستم وجود ندارد.";
+
     public static final int USER_ALREDY_EXIST = 30100;
     public static final String USER_ALREDY_EXIST_MESSAGE = "کاربر دیگری با این شناسه وجود دارد.";
 
